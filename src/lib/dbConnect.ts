@@ -1,4 +1,4 @@
-import mongoose, { Connection } from "mongoose";
+import mongoose from "mongoose";
 
 export interface IConnection {
   isConnected?: number;
@@ -8,7 +8,7 @@ const connection: IConnection = {};
 
 const dbConnect = async () => {
   if (connection.isConnected) {
-    console.log("Database is already collected!");
+    console.log("Database is already connected!");
     return;
   }
 

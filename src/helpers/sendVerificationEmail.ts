@@ -10,10 +10,16 @@ export const sendVerificationEmail = async ({
   email: string;
   otp: string;
 }) => {
-  return await resend.emails.send({
-    from: "Acme <onboarding@resend.dev>",
-    to: [email],
-    subject: "GhostFeedback | Verification E-mail",
-    react: SendVerificationEmail({ fullname, otp }),
-  });
+  try {
+    await resend.emails.send({
+      from: "Acme <onboarding@resend.dev>",
+      to: [email],
+      subject: "GhostFeedback | Verification E-mail",
+      react: SendVerificationEmail({ fullname, otp }),
+    });
+    return { success: true, message: "Verification email send successfully" };
+  } catch (error) {
+    console.error("Error while sending the verification email", error);
+    return { success: false, message: "Failed to send verification email" };
+  }
 };
