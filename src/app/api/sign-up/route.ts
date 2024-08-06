@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       return Response.json(
         {
           success: false,
-          message: "User exist with this username",
+          message: "User with this username already exists",
         },
         { status: 409 }
       );
