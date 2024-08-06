@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const usernameSchema = z
+export const usernameSchema = z
   .string()
   .min(4, "Username must be at least 4 character long")
   .max(20, "Username must not be more then 20 character long")
