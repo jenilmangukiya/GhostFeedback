@@ -55,5 +55,11 @@ export const POST = async (request: Request) => {
       success: true,
       message: "Successfully send the message to the user ",
     });
-  } catch (error) {}
+  } catch (error) {
+    console.error("Error while sending the message to user: ", error);
+    return Response.json({
+      success: false,
+      message: "Something went wrong while sending the message",
+    });
+  }
 };
