@@ -38,13 +38,17 @@ export const POST = async (request: Request) => {
       );
     }
 
-    const isDateValid = new Date(user.verifyCodeExpiry) < new Date();
+    const isDateValid = new Date(user.verifyCodeExpiry) > new Date();
+
     if (!isDateValid) {
-      return Response.json({
-        success: true,
-        message:
-          "Verification code expired, Please sign up again to generate a new code",
-      });
+      return Response.json(
+        {
+          success: false,
+          message:
+            "Verification code expired, Please sign up again to generate a new code",
+        },
+        { status: 401 }
+      );
     }
 
     if (user.verifyCode !== code) {
