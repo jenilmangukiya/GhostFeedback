@@ -9,7 +9,7 @@ export const authOptions: NextAuthOptions = {
     Credentials({
       name: "Credentials",
       credentials: {
-        email: {
+        identifier: {
           label: "Email",
           placeholder: "Enter email address",
           type: "email",
@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         await dbConnect();
         const user = await UserModel.findOne({
-          email: credentials?.email,
+          email: credentials?.identifier,
         });
 
         if (!user) {
