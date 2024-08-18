@@ -18,8 +18,32 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import axios, { AxiosError } from "axios";
+import { useToast } from "./ui/use-toast";
+import { APIResponse } from "@/types/APIResponse";
 
-const MessageCard = ({ ...rest }) => {
+const MessageCard = ({ message, ...rest }: { message: any }) => {
+  const { toast } = useToast();
+  const handleDeleteConfirm = async () => {
+    try {
+      const response = await axios.delete(
+        "/api/delete-message/" + message?._id
+      );
+      toast({
+        title: "Success",
+        description: response.data.message,
+      });
+    } catch (err) {
+      console.log("Error while deleting the message", err);
+      const axiosError = err as AxiosError<APIResponse>;
+      toast({
+        title: "Delete message failed",
+        description: axiosError.response?.data.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Card className="w-full" {...rest}>
       <CardHeader>
@@ -38,12 +62,14 @@ const MessageCard = ({ ...rest }) => {
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
                   This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
+                  your message and remove your data from our servers.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction>Continue</AlertDialogAction>
+                <AlertDialogAction onClick={handleDeleteConfirm}>
+                  Continue
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

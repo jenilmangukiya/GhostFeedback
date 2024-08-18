@@ -22,7 +22,8 @@ export const POST = async (request: Request) => {
   }
 
   try {
-    const user = await UserModel.findById(sessionUser._id);
+    const { content, username } = await request.json();
+    const user = await UserModel.findOne({ username: username });
     if (!user) {
       return Response.json({
         success: false,
@@ -37,7 +38,6 @@ export const POST = async (request: Request) => {
           "Failed to send message to the user, User is not accepting the messages at the moment",
       });
     }
-    const { content } = await request.json();
 
     const newMessage = { content, createdAt: new Date() };
 
