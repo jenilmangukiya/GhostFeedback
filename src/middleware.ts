@@ -1,6 +1,5 @@
 import { getToken } from "next-auth/jwt";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -11,8 +10,7 @@ export async function middleware(request: NextRequest) {
     token &&
     (url.pathname.startsWith("/sign-in") ||
       url.pathname.startsWith("/sign-up") ||
-      url.pathname.startsWith("/verify") ||
-      url.pathname.startsWith("/"))
+      url.pathname.startsWith("/verify"))
   ) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
