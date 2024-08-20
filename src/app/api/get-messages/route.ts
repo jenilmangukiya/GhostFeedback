@@ -46,9 +46,10 @@ export const GET = async (request: Request) => {
         {
           success: false,
           message: "No messages found",
+          data: [],
         },
         {
-          status: 404,
+          status: 200,
         }
       );
     }

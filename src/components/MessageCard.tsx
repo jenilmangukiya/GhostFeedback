@@ -22,7 +22,14 @@ import axios, { AxiosError } from "axios";
 import { useToast } from "./ui/use-toast";
 import { APIResponse } from "@/types/APIResponse";
 
-const MessageCard = ({ message, ...rest }: { message: any }) => {
+const MessageCard = ({
+  message,
+  onMessageDelete,
+  ...rest
+}: {
+  message: any;
+  onMessageDelete: (messageId: string) => void;
+}) => {
   const { toast } = useToast();
   const handleDeleteConfirm = async () => {
     try {
@@ -33,6 +40,7 @@ const MessageCard = ({ message, ...rest }: { message: any }) => {
         title: "Success",
         description: response.data.message,
       });
+      onMessageDelete && onMessageDelete(message._id);
     } catch (err) {
       console.log("Error while deleting the message", err);
       const axiosError = err as AxiosError<APIResponse>;
@@ -48,9 +56,7 @@ const MessageCard = ({ message, ...rest }: { message: any }) => {
     <Card className="w-full" {...rest}>
       <CardHeader>
         <div className="flex flex-row justify-between items-center">
-          <CardTitle>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </CardTitle>
+          <CardTitle>{message.content}</CardTitle>
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="destructive">
@@ -74,7 +80,7 @@ const MessageCard = ({ message, ...rest }: { message: any }) => {
             </AlertDialogContent>
           </AlertDialog>
         </div>
-        <CardDescription>{Date()}</CardDescription>
+        <CardDescription>{message.createdAt}</CardDescription>
       </CardHeader>
     </Card>
   );

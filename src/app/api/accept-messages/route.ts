@@ -91,9 +91,10 @@ export const GET = async (request: Request) => {
         {
           success: false,
           message: "User not found",
+          data: [],
         },
         {
-          status: 404,
+          status: 200,
         }
       );
     }
