@@ -35,7 +35,7 @@ const formSchema = z.object({
     .max(20),
 });
 
-export const Page = () => {
+const Page = () => {
   const [username, setUsername] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);

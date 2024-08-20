@@ -21,7 +21,7 @@ import Link from "next/link";
 import { signInSchema } from "@/schemas/signInSchema";
 import { signIn } from "next-auth/react";
 
-export const Page = () => {
+const Page = () => {
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
 
   const { toast } = useToast();
